@@ -1,2 +1,2 @@
-{"name": "example_1", "package": "chatgpt_api", "api": "get_completion", "result": "Hi there! How can I help you today?"}
-{"name": "example_2", "package": "chatgpt_api", "api": "get_completion", "result": "Testing 1 2 3"}
+{"name": "example_1", "package": "chatgpt_api", "api": "get_completion", "tokenCount": 10, "result": "Hi there! How can I help you today?"}
+{"name": "example_2", "package": "chatgpt_api", "api": "get_completion", "tokenCount": 8, "result": "Testing 1 2 3"}

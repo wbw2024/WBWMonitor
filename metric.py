@@ -7,7 +7,7 @@ import csv
 import json
 from datetime import datetime
 
-CSV_HEADER = ["name", "correct", "incorrect", "total", "accuracy"]
+CSV_HEADER = ["name", "correct", "incorrect", "total", "accuracy", "tokenCount"]
 
 def gen_metric():
     print("Generating metric based on inference results")
@@ -15,6 +15,7 @@ def gen_metric():
     for filename in os.listdir("./results/inference"):
         correct = 0
         incorrect = 0
+        token_count = 0
         print(f"Metric result for {filename}")
         results = {}
         ground_truths = {}
@@ -22,6 +23,7 @@ def gen_metric():
             for line in file:
                 data = json.loads(line)
                 results[data["name"]] = data["result"]
+                token_count += data["tokenCount"]
         with open(os.path.join("./results/ground_truth", filename), "r") as file:
             for line in file:
                 data = json.loads(line)
@@ -32,7 +34,7 @@ def gen_metric():
                 correct += 1
             else:
                 incorrect += 1
-        rows.append([filename.split(".")[0], correct, incorrect, correct + incorrect, correct / (correct + incorrect) if (correct + incorrect) > 0 else 0])
+        rows.append([filename.split(".")[0], correct, incorrect, correct + incorrect, correct / (correct + incorrect) if (correct + incorrect) > 0 else 0, token_count])
 
         output_filename = f"{filename.split('.')[0]}_metric_{datetime.now().strftime('%m%d%H%M')}.csv"
         with open(os.path.join("./results/metric", output_filename), "w+") as file:

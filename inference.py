@@ -8,8 +8,8 @@ import json
 
 def get_example_result(name):
     answers = {
-        "example_1": "Hi there! How can I help you today?",
-        "example_2": "Testing 1 2 3",
+        "example_1": {"answer": "Hi there! How can I help you today?", "tokenCount": 10},
+        "example_2": {"answer": "Testing 1 2 3", "tokenCount": 8},
     }
     return answers.get(name, "No answer found")
 
@@ -27,7 +27,8 @@ def gen_inference():
                     "name": data["name"],
                     "package": data["package"],
                     "api": data["api"],
-                    "result": result,
+                    "tokenCount": result["tokenCount"],
+                    "result": result["answer"],
                 })
         with open(os.path.join("./results/inference", filename), "w+") as file:
             for result in results:
