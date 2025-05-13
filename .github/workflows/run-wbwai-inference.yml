@@ -1,0 +1,35 @@
+name: Run WBWAI inference and metric
+
+on:
+  repository_dispatch:
+    types: [wbwai-updated]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Determine source details
+        run: |
+          echo "BRANCH=${{ github.event.client_payload.branch }}" >> $GITHUB_ENV
+          echo "COMMIT=${{ github.event.client_payload.commit }}" >> $GITHUB_ENV
+
+      - name: Checkout WBWAI source
+        uses: actions/checkout@v4
+        with:
+          repository: wbw2024/WBWAI
+          ref: ${{ env.BRANCH }}
+          path: WBWAI
+          token: ${{ secrets.GH_PAT }}   # PAT with read access to WBWAI
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: |
+          pip install -r WBWAI/requirements.txt
+
+      - name: Run the tests
+        run: python main.py

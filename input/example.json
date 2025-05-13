@@ -1,0 +1,2 @@
+{"name": "example_1", "package":"chatgpt_api", "api": "get_completion", "question": "hello"}
+{"name": "example_2", "package":"chatgpt_api", "api": "get_completion", "question": "Repeat after me: Testing 1 2 3"}
